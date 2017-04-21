@@ -185,10 +185,13 @@ if __name__ == "__main__":
     ion = Ion(position, velocity, ionElement)
 
     # Define the target material
-    Na = element_table.get_elementbysymbol('Na')
-    compoundNa = Compound([1.0], [Na], [15])
-    layerNa = Layer(1000000, compoundNa)
-    target = Target([layerNa])
+    silicon = element_table.get_elementbysymbol('Si')
+    oxygen  = element_table.get_elementbysymbol('O')
+    sio2    = Compound([1.0, 2.0], [silicon, oxygen], [16, 8])
+    si      = Compound([1.0], [silicon], [16])
+    lr_sio2 = Layer(300, sio2) # thickness [nm]
+    lr_si   = Layer(1e6, si) 
+    target = Target([lr_sio2, lr_si])
 
     # Initialize MPI Enviroment
     comm = MPI.COMM_WORLD #Wow that was simple
