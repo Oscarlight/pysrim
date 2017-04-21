@@ -13,7 +13,7 @@ Options:
   --ionEnergy=<keV>       The energy for each ion [default: 1000000]
   -o                      Output filename [default: temp.csv]
 """
-
+from __future__ import print_function
 from ion import Ion
 from element import Element, ElementTable
 from target import Target, Layer, Compound
@@ -199,11 +199,11 @@ if __name__ == "__main__":
     rank = comm.Get_rank()
 
     # We split the job among all the nodes running the job
-    myNumIons = numIons / size
+    myNumIons = int(numIons / size)
     if ((numIons % size) > rank):
         myNumIons += 1
 
-    print "My rank %d of %d running %d ions" % (rank, size, myNumIons)
+    print("My rank %d of %d running %d ions" % (rank, size, myNumIons))
         
     ionStatistics = runSimulation(ion, target, numIons = myNumIons)
 
